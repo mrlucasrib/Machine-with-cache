@@ -1,7 +1,6 @@
 package machine;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MMU {
     ArrayList<Memory> memList;
@@ -13,9 +12,14 @@ public class MMU {
         memList.add(cache1);
     }
 
-    public void findInMemory(int address) {
+    public Integer findInMemory(int address) {
         for (Memory mem : memList) {
-            mem.getValue(address);
+            Integer value = mem.getValue(address);
+            if(value==null)
+                continue;
+            return value;
+
         }
+
     }
 }

@@ -5,6 +5,11 @@ import java.util.LinkedHashMap;
 public class MemoryBlock {
     LinkedHashMap<Integer, Integer> words;
     int size;
+    int frequency;
+
+    public int getFrequency() {
+        return frequency;
+    }
 
     public MemoryBlock(int size) {
         words = new LinkedHashMap<>(size);
@@ -15,11 +20,11 @@ public class MemoryBlock {
         words.put(address % size, value);
     }
 
-    public int findWord(int address) {
+    public Integer findWord(int address) {
         return words.get(address % size);
     }
 
-    public boolean addressExists(int address){
+    public boolean addressExists(int address) {
         return words.get(address) != null;
     }
 }
