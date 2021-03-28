@@ -4,16 +4,17 @@ import java.util.LinkedHashMap;
 
 public class MemoryBlock {
     LinkedHashMap<Integer, Integer> words;
-    int size;
+    final int size, bigAddress;
     int frequency;
 
     public int getFrequency() {
         return frequency;
     }
 
-    public MemoryBlock(int size) {
+    public MemoryBlock(int size, int bigAddress) {
         words = new LinkedHashMap<>(size);
         this.size = size;
+        this.bigAddress = bigAddress;
     }
 
     public void addWords(int address, int value) {
