@@ -4,7 +4,13 @@ import java.util.LinkedHashMap;
 
 public class MemoryBlock {
     LinkedHashMap<Integer, Integer> words;
-    final int size, bigAddress;
+    private final int size;
+
+    public int getBigAddress() {
+        return bigAddress;
+    }
+
+    private final int bigAddress;
     int frequency;
 
     public int getFrequency() {
@@ -22,6 +28,7 @@ public class MemoryBlock {
     }
 
     public Integer findWord(int address) {
+        frequency++;
         return words.get(address % size);
     }
 

@@ -5,6 +5,15 @@ import java.util.Map;
 
 public class Memory {
     private HashMap<Integer, MemoryBlock> MemoryBlocks;
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getSizeBlock() {
+        return sizeBlock;
+    }
+
     private final int size;
     private final int sizeBlock;
 
@@ -23,25 +32,18 @@ public class Memory {
     public Memory(int size, int sizeBlock) {
         this.size = size;
         this.sizeBlock = sizeBlock;
+        MemoryBlocks = new HashMap<>();
 
     }
 
-    public MemoryBlock setValue(int address, int value) {
+    //Necessario fazer verificaçoes se o bloco existe antes de chamar
+    public void setValue(int address, int addrWord, int value) {
         MemoryBlock block = MemoryBlocks.get(address);
         if (block == null) {
-            MemoryBlock newBlock = new MemoryBlock(address, sizeBlock);
-            newBlock.addWords(address, value);
-            if (size <= MemoryBlocks.size()) {
-                MemoryBlocks.put(address, newBlock);
-                return null;
-            } else {
-                return discartBlock();
-            }
-        } else {
-            if (!block.addressExists(address))
-                block.addWords(address, value);
+            block = new MemoryBlock(sizeBlock, address);
+            MemoryBlocks.put(address, block);
         }
-        return null;
+        block.addWords(addrWord, value);
     }
 
     public MemoryBlock discartBlock() {
@@ -54,17 +56,24 @@ public class Memory {
                 discarded = m.getValue();
             }
         }
+        if (discarded != null)
+            MemoryBlocks.remove(discarded.getBigAddress());
+        else {
+            discarded = MemoryBlocks.get(MemoryBlocks.keySet().toArray()[this.size-1]);
+            MemoryBlocks.remove(discarded.getBigAddress());
+        }
         return discarded;
     }
 
-    public Integer getValue(int address) {
+    public Integer getValue(int address, int addrWord) {
         MemoryBlock block = MemoryBlocks.get(address);
-        Integer value = block.findWord(address);
-        if (value == null)
+        if (block == null) {
             this.miss++;
-        else
+            return null;
+        } else {
             this.hit++;
-        return value;
+            return block.findWord(addrWord);
+        }
     }
 
 
@@ -74,13 +83,17 @@ public class Memory {
         return m;
     }
 
-    public MemoryBlock addBlock(int address, MemoryBlock block) {
+    public MemoryBlock addBlock(MemoryBlock block) {
         if (MemoryBlocks.size() >= size) {
             return discartBlock();
         } else {
-            MemoryBlocks.put(address, block);
+            MemoryBlocks.put(block.getBigAddress(), block);
             return null;
         }
 
+    }
+
+    public MemoryBlock getBlock(int address) {
+        return MemoryBlocks.get(address);
     }
 }
