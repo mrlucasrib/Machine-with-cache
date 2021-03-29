@@ -25,7 +25,6 @@ public class MMU {
 
     public Integer findInMemory(int address, int addrWord) {
         for (Memory m : memList) {
-            // TODO: RETORNA NULL QDO N DEVERIA
             Integer value = m.getValue(address, addrWord);
             if (value != null) {
                 swapMemory(m.getBlock(address), 0);

@@ -10,7 +10,10 @@ public class Main {
 
     public static void main(String[] args) {
         Queue<Instructions> instructions = readInstructions();
-        Machine machine = new Machine(instructions, 8, 16, 32, 1000);
+
+        Scanner scanner = new Scanner(System.in);
+        Machine machine = new Machine(instructions, Integer.parseInt(scanner.nextLine()),
+                Integer.parseInt(scanner.nextLine()), Integer.parseInt(scanner.nextLine()), 1000);
         machine.run();
     }
 
@@ -23,7 +26,7 @@ public class Main {
                 String data = myReader.nextLine();
                 String[] str = data.split(" ");
                 int[] i = Arrays.stream(str).mapToInt(Integer::parseInt).toArray();
-                Instructions instructions = new Instructions(i[0], i[1],i[2],i[3], i[4], i[5], i[6]);
+                Instructions instructions = new Instructions(i[0], i[1], i[2], i[3], i[4], i[5], i[6]);
                 qi.add(instructions);
             }
             myReader.close();
