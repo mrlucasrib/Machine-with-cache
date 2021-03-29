@@ -40,7 +40,7 @@ public class Machine {
     private void printInfo() {
         for (Memory mem : mList) {
             float total = mem.getHit() + mem.getMiss();
-            System.out.printf("%.2f;%.2f\n",(mem.getHit()/total)*100,(mem.getMiss()/total)*100);
+            System.out.printf("%.2f;",(mem.getHit()/total)*100);
         }
     }
 
