@@ -2,11 +2,10 @@ package machine;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Random;
 
 public class Machine {
     Queue<Instructions> instructions;
-    LinkedList<Memory> mList;
+    LinkedList<IMemory> mList;
     MMU mmu;
 
     public Machine(Queue<Instructions> instructions, int... n) {
@@ -15,9 +14,11 @@ public class Machine {
             Memory temp = new Memory(num, 4);
             mList.add(temp);
         }
+        IMemory ext_mem = new ExternalMemory(1024,4);
+        mList.add(ext_mem);
+
         mmu = new MMU(mList.toArray(new Memory[mList.size()]));
         this.instructions = instructions;
-        populateRam(mList.getLast());
     }
 
     public void run() {
@@ -38,21 +39,21 @@ public class Machine {
     }
 
     private void printInfo() {
-        for (Memory mem : mList) {
+        for (IMemory mem : mList) {
             float total = mem.getHit() + mem.getMiss();
             System.out.printf("%.2f;",(mem.getHit()/total)*100);
         }
     }
 
-    // Na pratica, este metodo não deveria existir, e sim as instruçoes entregues a maquinas que deveriam ser responsa-
-    // veis pela alocação de valores na memoria.
-    private void populateRam(Memory memory) {
-        Random r = new Random();
-        for (int i = 0; i < memory.getSize(); i++) {
-            for (int j = 0; j < memory.getSizeBlock(); j++) {
-                memory.setValue(i, j, r.nextInt(10000));
-            }
-        }
-    }
+//    // Na pratica, este metodo não deveria existir, e sim as instruçoes entregues a maquinas que deveriam ser responsa-
+//    // veis pela alocação de valores na memoria.
+//    private void populateRam(Memory memory) {
+//        Random r = new Random();
+//        for (int i = 0; i < memory.getSize(); i++) {
+//            for (int j = 0; j < memory.getSizeBlock(); j++) {
+//                memory.setValue(i, j, r.nextInt(10000));
+//            }
+//        }
+//    }
 
 }

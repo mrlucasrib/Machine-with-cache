@@ -9,18 +9,19 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Queue<Instructions> instructions = readInstructions();
-
         Scanner scanner = new Scanner(System.in);
+        String pathname = scanner.nextLine();
+        Queue<Instructions> instructions = readInstructions(pathname);
+
         Machine machine = new Machine(instructions, Integer.parseInt(scanner.nextLine()),
                 Integer.parseInt(scanner.nextLine()), Integer.parseInt(scanner.nextLine()), 1000);
         machine.run();
     }
 
-    private static <FileNotFoundException> Queue<Instructions> readInstructions() {
+    private static <FileNotFoundException> Queue<Instructions> readInstructions(String pathname) {
         Queue<Instructions> qi = new LinkedList<>();
         try {
-            File myObj = new File("/home/lucas/Downloads/instructions.txt");
+            File myObj = new File(pathname);
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();

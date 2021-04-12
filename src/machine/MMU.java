@@ -1,11 +1,10 @@
 package machine;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
 public class MMU {
-    LinkedList<Memory> memList;
+    LinkedList<IMemory> memList;
 
     public MMU(Memory... mem) {
         memList = new LinkedList<>();
@@ -14,7 +13,7 @@ public class MMU {
 
     private void swapMemory(MemoryBlock block, int i) {
 
-        Memory m = memList.get(i);
+        IMemory m = memList.get(i);
         if(m.getBlock(block.getBigAddress()) == null){
             MemoryBlock blk = m.addBlock(block);
             if(blk != null)
@@ -24,7 +23,7 @@ public class MMU {
     }
 
     public Integer findInMemory(int address, int addrWord) {
-        for (Memory m : memList) {
+        for (IMemory m : memList) {
             Integer value = m.getValue(address, addrWord);
             if (value != null) {
                 swapMemory(m.getBlock(address), 0);
@@ -37,7 +36,7 @@ public class MMU {
 
 
     public void setValue(int address, int addrWord, int value) {
-        for (Memory m : memList) {
+        for (IMemory m : memList) {
             if (m.getBlock(address) != null) {
                 m.getBlock(address).addWords(addrWord, value);
             }
