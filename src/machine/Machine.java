@@ -2,28 +2,42 @@ package machine;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Iterator;
+import java.util.Random;
 
 public class Machine {
-    Queue<Instructions> instructions;
+    Queue<Instructions> instructionsProgram1, instructionsProgram2;
     LinkedList<IMemory> mList;
     MMU mmu;
 
-    public Machine(Queue<Instructions> instructions, int... n) {
+    public Machine(Queue<Instructions> instructionsProgram1,Queue<Instructions> instructionsProgram2, int... n) {
         mList = new LinkedList<>();
         for (int num : n) {
-            Memory temp = new Memory(num, 4);
+            InternalMemory temp = new InternalMemory(num, 4);
             mList.add(temp);
         }
-        IMemory ext_mem = new ExternalMemory(1024,4);
+        IMemory ext_mem = new ExternalMemory(1024, 4);
         mList.add(ext_mem);
 
-        mmu = new MMU(mList.toArray(new Memory[mList.size()]));
-        this.instructions = instructions;
+        mmu = new MMU(mList);
+        this.instructionsProgram1 = instructionsProgram1;
+        this.instructionsProgram2 = instructionsProgram2;
     }
 
     public void run() {
-        for (Instructions i : instructions) {
-            interpret(i);
+        Iterator<Instructions> iProg1 = instructionsProgram1.iterator();
+        Iterator<Instructions> iProg2 = instructionsProgram2.iterator();
+        while (iProg1.hasNext() || iProg2.hasNext()) {
+            Random r = new Random();
+            // 25%
+            int probability = r.nextInt(4);
+            if (probability == 0) {
+                if (iProg1.hasNext())
+                    interpret(iProg1.next());
+            } else {
+                if (iProg2.hasNext())
+                    interpret(iProg2.next());
+            }
         }
     }
 
@@ -41,7 +55,7 @@ public class Machine {
     private void printInfo() {
         for (IMemory mem : mList) {
             float total = mem.getHit() + mem.getMiss();
-            System.out.printf("%.2f;",(mem.getHit()/total)*100);
+            System.out.printf("%.2f;", (mem.getHit() / total) * 100);
         }
     }
 

@@ -11,9 +11,11 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String pathname = scanner.nextLine();
-        Queue<Instructions> instructions = readInstructions(pathname);
+        Queue<Instructions> instructionsProgram1 = readInstructions(pathname);
+        pathname = scanner.nextLine();
+        Queue<Instructions> instructionsProgram2 = readInstructions(pathname);
 
-        Machine machine = new Machine(instructions, Integer.parseInt(scanner.nextLine()),
+        Machine machine = new Machine(instructionsProgram1,instructionsProgram2, Integer.parseInt(scanner.nextLine()),
                 Integer.parseInt(scanner.nextLine()), Integer.parseInt(scanner.nextLine()), 1000);
         machine.run();
     }
