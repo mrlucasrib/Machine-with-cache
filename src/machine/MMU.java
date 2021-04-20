@@ -2,13 +2,14 @@ package machine;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class MMU {
     LinkedList<IMemory> memList;
 
-    public MMU(Memory... mem) {
+    public MMU(List<IMemory> mem) {
         memList = new LinkedList<>();
-        memList.addAll(Arrays.asList(mem));
+        memList.addAll(mem);
     }
 
     private void swapMemory(MemoryBlock block, int i) {
@@ -30,14 +31,15 @@ public class MMU {
                 return value;
             }
         }
-        // Sempre será encontrado na RAM, por isso nunca retornará null
+        // Sempre será encontrado na ultima memoria, por isso nunca retornará null
         return null;
     }
 
 
     public void setValue(int address, int addrWord, int value) {
         for (IMemory m : memList) {
-            if (m.getBlock(address) != null) {
+            MemoryBlock mb = m.getBlock(address);
+            if (mb != null) {
                 m.getBlock(address).addWords(addrWord, value);
             }
         }

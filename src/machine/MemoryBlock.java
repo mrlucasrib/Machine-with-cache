@@ -1,8 +1,9 @@
 package machine;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 
-public class MemoryBlock {
+public class MemoryBlock implements Serializable {
     LinkedHashMap<Integer, Integer> words;
     private final int size;
 
@@ -30,9 +31,5 @@ public class MemoryBlock {
     public Integer findWord(int address) {
         frequency++;
         return words.get(address % size);
-    }
-
-    public boolean addressExists(int address) {
-        return words.get(address) != null;
     }
 }

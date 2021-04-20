@@ -3,7 +3,7 @@ package machine;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Memory implements IMemory {
+public class InternalMemory implements IMemory {
     private HashMap<Integer, MemoryBlock> MemoryBlocks;
 
     private int getSize() {
@@ -14,8 +14,8 @@ public class Memory implements IMemory {
         return sizeBlock;
     }
 
-    private final int size;
-    private final int sizeBlock;
+    protected final int size;
+    protected final int sizeBlock;
 
     @Override
     public int getHit() {
@@ -31,7 +31,7 @@ public class Memory implements IMemory {
     private int miss;
 
 
-    public Memory(int size, int sizeBlock) {
+    public InternalMemory(int size, int sizeBlock) {
         this.size = size;
         this.sizeBlock = sizeBlock;
         MemoryBlocks = new HashMap<>();
