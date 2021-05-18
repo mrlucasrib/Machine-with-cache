@@ -59,9 +59,7 @@ public class ExternalMemory implements IMemory {
             objstream.close();
             return m.findWord(addrWord);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         // Nunca retornará a null

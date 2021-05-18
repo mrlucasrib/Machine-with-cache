@@ -57,17 +57,7 @@ public class Machine {
             float total = mem.getHit() + mem.getMiss();
             System.out.printf("%.2f;", (mem.getHit() / total) * 100);
         }
+        System.out.println("\n");
     }
-
-//    // Na pratica, este metodo não deveria existir, e sim as instruçoes entregues a maquinas que deveriam ser responsa-
-//    // veis pela alocação de valores na memoria.
-//    private void populateRam(Memory memory) {
-//        Random r = new Random();
-//        for (int i = 0; i < memory.getSize(); i++) {
-//            for (int j = 0; j < memory.getSizeBlock(); j++) {
-//                memory.setValue(i, j, r.nextInt(10000));
-//            }
-//        }
-//    }
 
 }
